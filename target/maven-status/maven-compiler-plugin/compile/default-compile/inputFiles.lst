@@ -1,0 +1,16 @@
+/Users/vatsa/Documents/development/JavaDevelopement/BLOGS/src/main/java/com/blog/servlets/EditServlet.java
+/Users/vatsa/Documents/development/JavaDevelopement/BLOGS/src/main/java/com/blog/helper/PicHelper.java
+/Users/vatsa/Documents/development/JavaDevelopement/BLOGS/src/main/java/com/blog/servlets/DeleteBlogServlet.java
+/Users/vatsa/Documents/development/JavaDevelopement/BLOGS/src/main/java/com/blog/entities/User.java
+/Users/vatsa/Documents/development/JavaDevelopement/BLOGS/src/main/java/com/blog/DAO/UserDAO.java
+/Users/vatsa/Documents/development/JavaDevelopement/BLOGS/src/main/java/com/blog/servlets/LogoutServlet.java
+/Users/vatsa/Documents/development/JavaDevelopement/BLOGS/src/main/java/com/blog/servlets/RegisterServlet.java
+/Users/vatsa/Documents/development/JavaDevelopement/BLOGS/src/main/java/com/blog/entities/Categories.java
+/Users/vatsa/Documents/development/JavaDevelopement/BLOGS/src/main/java/com/blog/DAO/AddCategoriesDAO.java
+/Users/vatsa/Documents/development/JavaDevelopement/BLOGS/src/main/java/com/blog/entities/Blogs.java
+/Users/vatsa/Documents/development/JavaDevelopement/BLOGS/src/main/java/com/blog/DAO/PostDAO.java
+/Users/vatsa/Documents/development/JavaDevelopement/BLOGS/src/main/java/com/blog/servlets/AddPostServlet.java
+/Users/vatsa/Documents/development/JavaDevelopement/BLOGS/src/main/java/com/blog/servlets/AddCategoriesServlet.java
+/Users/vatsa/Documents/development/JavaDevelopement/BLOGS/src/main/java/com/blog/entities/Message.java
+/Users/vatsa/Documents/development/JavaDevelopement/BLOGS/src/main/java/com/blog/servlets/LoginServlet.java
+/Users/vatsa/Documents/development/JavaDevelopement/BLOGS/src/main/java/com/blog/helper/ConnectionProvider.java
