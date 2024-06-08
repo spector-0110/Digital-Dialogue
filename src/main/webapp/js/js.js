@@ -1,6 +1,5 @@
 
 //Loading post using Ajax
-
 function getPost(catId, reference) {
 
 	$(".c-link").removeClass('primary-background');

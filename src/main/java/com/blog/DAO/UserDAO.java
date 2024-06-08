@@ -16,6 +16,7 @@ public class UserDAO {
 
 	public boolean saveUser(User user) {
 		boolean flag = false;
+
 		try {
 			String query = "insert into user(name,email,password,gender,about) value(?,?,?,?,?)";
 			PreparedStatement ps = this.connection.prepareStatement(query);
@@ -32,6 +33,36 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return flag;
+
+	}
+
+	public User getUserByEmail(String email) {
+
+		User user = null;
+
+		try {
+			String query = "select * from user where email=?";
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setString(1, email);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				user = new User();
+				user.setId(rs.getInt("id"));
+				user.setAbout(rs.getString("about"));
+				user.setName(rs.getString("name"));
+				user.setEmail(rs.getString("email"));
+				user.setGender(rs.getString("gender"));
+				user.setDatetime(rs.getTimestamp("rDate"));
+				user.setPassword(rs.getString("password"));
+				user.setProfile(rs.getString("profile"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return user;
 
 	}
 

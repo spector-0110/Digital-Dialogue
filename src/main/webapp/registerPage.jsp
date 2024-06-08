@@ -35,7 +35,7 @@
 	<main class="primary-background p-5 banner-background">
 		<div class="container">
 			<div class="col-md-6 offset-md-3 ">
-				<div>
+				<div id="reg-form-header">
 					<div class="card-header  text-center">
 						<span class="fa fa-user-plus fa-3x"></span> <br>
 						<p>Register here</p>
@@ -102,6 +102,23 @@
 						</form>
 					</div>
 				</div>
+				<div id="otp-form-header" style="display: none;">
+					<div class="card-header  text-center">
+						<span class="fa fa-user-plus fa-3x"></span> <br>
+						<p>OTP verification</p>
+					</div>
+					<div class="card-body ">
+						<form id="otp-form" action="OtpVerificationServlet" method="POST">
+							<div class="container text-center">
+								<input required name="otp" type="text" class="form-control"
+									id="userOtp" aria-describedby="otpHelp"
+									placeholder="Enter otp send on your email"><br>
+								<button id="submit-btn-otp" type="submit"
+									class="btn btn-primary">Verify</button>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -122,52 +139,101 @@
 	<SCRIPT>
 	
 	// register a user js
-
 	$(document).ready(function() {
-		console.log("loaded........")
+    console.log("loaded........")
 
-		$('#reg-form').on('submit', function(event) {
-			event.preventDefault();
+    $('#reg-form').on('submit', function(event) {
+        event.preventDefault();
 
+        let form = new FormData(this);
 
+        $("#submit-btn").hide();
+        $("#loader").show();
 
-			let form = new FormData(this);
+        // Send register servlet:
+        $.ajax({
+            url: "RegisterServlet",
+            type: 'POST',
+            data: form,
+            success: function(data, textStatus, jqXHR) {
+                console.log(data)
 
-			$("#submit-btn").hide();
-			$("#loader").show();
-			//send register servlet:
-			$.ajax({
-				url: "RegisterServlet",
-				type: 'POST',
-				data: form,
-				success: function(data, textStatus, jqXHR) {
-					console.log(data)
+                $("#submit-btn").show();
+                $("#loader").hide();
 
-					$("#submit-btn").show();
-					$("#loader").hide();
+                if (data.trim() === 'Already Registered!') {
+                    swal("Account already exist.. redirecting to login page")
+                        .then((value) => {
+                            window.location = "loginPage.jsp"
+                        });
+                } else {
+                    $("#reg-form-header").hide();
+                    $("#otp-form-header").show();
+                    
+                    $('#otp-form').on('submit', function(event) {
+                        event.preventDefault();
+                        
+                        let form1 = new FormData(this);
+                        $("#submit-btn-otp").hide();
+                        $("#loader").show();
+                        
+                        $.ajax({
+                            url: "OtpVerificationServlet",
+                            type: 'POST',
+                            data: form1,
+                            success: function(data, textStatus, jqXHR) {
+                                console.log(data)
+                                $("#submit-btn-otp").show();
+                                $("#loader").hide();
+                                // You can handle further logic here, such as OTP verification success message or redirection
+                                
+                                if(data.trim()==='incorrectOtp'){
+                                	swal("Incorect OTP try again!!")	
+                                }
+                                else{
+                                	
+                                	if(data.trim()==='success'){
+                                		swal("Registered successfully.. redirecting to login page")
+                                        .then((value) => {
+                                            window.location = "loginPage.jsp"
+                                        });
+                                		
+                                	}
+                                	else{
+                                		swal("Something went wrong .. register again")
+                                        .then((value) => {
+                                            window.location = "registerPage.jsp"
+                                        });
+                                		
+                                	}
+                                }
+                                
+                                
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                $("#submit-btn-otp").show();
+                                $("#loader").hide();
+                                $("#reg-form-header").show();
+                                $("#otp-form-header").hide();
+                                swal("something went wrong with OTP verification..try again");
+                            },
+                            processData: false,
+                            contentType: false
+                        });
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                $("#submit-btn").show();
+                $("#loader").hide();
+                swal("something went wrong..try again");
+            },
+            processData: false,
+            contentType: false
+        });
+    });
+});
 
-					if (data.trim() === 'success') {
-
-						swal("Registered successfully.. redirecting to login page")
-							.then((value) => {
-								window.location = "loginPage.jsp"
-							});
-					} else {
-
-						swal(data);
-					}
-				},
-				error: function(jqXHR, textStatus, errorThrown) {
-					$("#submit-btn").show();
-					$("#loader").hide();
-					swal("something went wrong..try again");
-
-				},
-				processData: false,
-				contentType: false
-			});
-		});
-	});
 
 
 </SCRIPT>
@@ -177,3 +243,64 @@
 	<%@include file="footer.jsp"%>
 </footer>
 </html>
+
+<!-- 
+
+else {
+						$("#reg-form-header").hide();
+						$("#otp-form-header").show();
+						
+						$('#otp-form').on('submit', function(event) {
+							event.preventDefault();
+
+							let form = new FormData(this);
+
+							$("#submit-btn-otp").hide();
+							$("#loader").show();
+							//send otp verification servlet:
+							$.ajax({
+								url: "OtpVerificationServlet",
+								type: 'POST',
+								data: form,
+								success: function(data, textStatus, jqXHR) {
+									console.log(data)
+									$("#submit-btn-otp").show();
+									$("#loader").hide();
+									
+									if (data.trim() == 'incorrectOtp'){
+										
+										swal(" Wrong OTP!! try again..")
+										
+										}
+									
+									else{
+										if(data.trim() == 'success')
+										{
+											swal("Registered Successfully.. redirecting to login page")
+											.then((value) => {
+												window.location = "loginPage.jsp"
+											});
+										}
+										else {
+											swal("Error occured Try again!!")
+											.then((value) => {
+												window.location = "RegisterPage.jsp"
+											});
+											
+											
+										     }
+										
+									     }
+								   }
+							error: function(jqXHR, textStatus, errorThrown) {
+								$("#reg-form-header").show();
+								$("#otp-form-header").hide();
+								$("#loader").hide();
+								swal("something went wrong..try again");
+							}
+							
+						}),
+							
+					}
+					//else 
+				}, -->

@@ -53,7 +53,7 @@ if (userN == null)
 			style="background-color: #2c3e50;">
 			<li class="nav-item dropdown "><a class="nav-link active"
 				href="#" role="button" data-bs-toggle="dropdown"
-				aria-expanded="false"><span class="fa fa-user-circle fa-2x"></span>
+				aria-expanded="false"><span class="temp fa fa-user-circle fa-2x"></span>
 			</a>
 				<ul class="dropdown-menu">
 					<li><a class="nav-link" href="#" data-bs-toggle="modal"
